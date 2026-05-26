@@ -45,7 +45,9 @@ RUN mkdir -p /var/www/.composer/cache && \
 
 # Install PHP dependencies as the www-data user
 USER www-data
-RUN composer install --no-interaction --no-scripts --prefer-dist
+# Disable GrumPHP plugin so it doesn't try to install git hooks during build
+RUN composer config allow-plugins.phpro/grumphp false && \
+    composer install --no-interaction --no-scripts --prefer-dist
 
 # Switch back to root to copy the rest of the project files and set permissions
 USER root

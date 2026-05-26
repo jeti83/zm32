@@ -5,7 +5,7 @@
 docker-compose -f docker-compose-prod.yml --env-file .env build
 
 # Step 2: Laufende Container stoppen
-docker-compose down
+docker-compose -f docker-compose-prod.yml --env-file .env down
 
 # Step 3: Container neu starten
 docker-compose -f docker-compose-prod.yml --env-file .env up --force-recreate -d
