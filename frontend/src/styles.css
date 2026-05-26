@@ -45,6 +45,8 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   height: 100%;
+  /* Disable double-tap zoom on iOS Safari; pinch-to-zoom still works */
+  touch-action: manipulation;
 }
 
 .mat-form-field {
