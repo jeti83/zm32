@@ -40,8 +40,6 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount the init script
     networks:
       - symfony-angular-network
-    ports:
-      - "3306:3306"  # Ensure this line exists
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "database", "-u", "${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
       interval: 30s

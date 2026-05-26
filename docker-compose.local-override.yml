@@ -1,3 +1,6 @@
+# Optionaler Override fuer lokalen DB-Zugriff per GUI-Tool (z.B. TablePlus, DBeaver)
+# Verwendung: docker-compose -f docker-compose-prod.yml -f docker-compose.local-override.yml up
+# Port 3307 statt 3306 um Konflikt mit lokalem MySQL-Dienst zu vermeiden.
 services:
   database:
     ports:
