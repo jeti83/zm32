@@ -66,6 +66,9 @@ RUN chown -R www-data:www-data /var/www/symfony/var /var/www/symfony/vendor
 # Copy the PHP-FPM configuration file for the container
 COPY backend/fpm.conf /usr/local/etc/php-fpm.d/www.conf
 
+# Copy OPcache configuration
+COPY backend/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
 # Copy entrypoint and wait-for-it scripts, ensuring they have Unix line endings
 COPY backend/entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY backend/wait-for-it.sh /usr/local/bin/wait-for-it
