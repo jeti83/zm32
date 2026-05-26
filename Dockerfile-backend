@@ -43,11 +43,12 @@ RUN mkdir -p /var/www/.composer/cache && \
     mkdir -p /var/www/symfony/vendor && \
     chown -R www-data:www-data /var/www/symfony/vendor
 
+# Disable GrumPHP plugin as root (composer.json is root-owned at this point)
+RUN composer config allow-plugins.phpro/grumphp false
+
 # Install PHP dependencies as the www-data user
 USER www-data
-# Disable GrumPHP plugin so it doesn't try to install git hooks during build
-RUN composer config allow-plugins.phpro/grumphp false && \
-    composer install --no-interaction --no-scripts --prefer-dist
+RUN composer install --no-interaction --no-scripts --prefer-dist
 
 # Switch back to root to copy the rest of the project files and set permissions
 USER root
