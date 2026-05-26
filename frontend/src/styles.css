@@ -401,19 +401,16 @@ mat-form-field {
 }
 
 .input-wrapper {
-  position: fixed; /* Fixes the position relative to the viewport */
-  top: 10px; /* Adjust the top position as needed */
-  right: 70px; /* Adjust the right position as needed */
-  z-index: 1000; /* Ensures the input field appears above other elements */
-  background-color: #fff; /* Optional: Set a background color for better visibility */
-  padding: 10px; /* Optional: Add padding to the input wrapper */
-  border-radius: 4px; /* Optional: Add border radius for rounded corners */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visibility */
+  margin-left: auto;
+  background-color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Style for the input field inside the fixed wrapper */
 .input-wrapper input {
-  width: 200px; /* Set a fixed width for the input field */
+  width: 200px;
+  max-width: calc(100vw - 120px); /* responsive on narrow viewports */
 }
 
 input-wrapper-relative {
@@ -426,14 +423,16 @@ input-wrapper-relative {
 }
 
 .input-wrapper-cancel-btn {
-  position: fixed !important; /* Fixes the position relative to the viewport */
-  top: 0; /* Adjust the top position as needed */
-  right: 30px; /* Adjust the right position as needed */
-  z-index: 1000; /* Ensures the input field appears above other elements */
-  background-color: #fff; /* Optional: Set a background color for better visibility */
-  padding: 10px; /* Optional: Add padding to the input wrapper */
-  border-radius: 4px; /* Optional: Add border radius for rounded corners */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visibility */
+  margin-left: auto;
+}
+
+/* Compact search toolbar below the navigation bar */
+.search-toolbar {
+  min-height: 48px !important;
+  height: 48px !important;
+  background-color: #f5f5f5 !important;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 8px !important;
 }
 
 /* Make the sidenav fixed */
@@ -454,9 +453,9 @@ input-wrapper-relative {
 /* Ensure content is pushed to the right of the fixed sidenav */
 .mat-sidenav-container {
   margin-top: 60px;
-  margin-left: -10px;
-  width: 100vw;
+  width: 100%;
   padding-bottom: 70px;
+  overflow-x: hidden;
 }
 
 .toolbar-content {

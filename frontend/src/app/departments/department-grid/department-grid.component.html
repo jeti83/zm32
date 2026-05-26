@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar class="search-toolbar">
   <input type="text"
          #searchInput
          *ngIf="!isSearchIconVisible"
@@ -14,7 +14,7 @@
           mat-icon-button
           class="input-wrapper-cancel-btn"
           matTooltip="Suche"
-          [ngStyle]="{'color': searchTerm ? 'red' : 'white'}"
+          [ngStyle]="{'color': searchTerm ? 'red' : null}"
           (click)="setSearchIconVisible(false)">
     <mat-icon>search</mat-icon>
   </button>
