@@ -15,3 +15,9 @@ Start-Sleep -Seconds 10
 
 # Browser mit lokalem Host oeffnen
 Start-Process "https://localhost:4444"
+
+# Terminal offen halten bis Enter oder Esc gedrueckt wird
+Write-Host "`nIBA laeuft. Druecke Enter oder Esc zum Schliessen..."
+do {
+    $key = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+} while ($key.VirtualKeyCode -ne 13 -and $key.VirtualKeyCode -ne 27)
