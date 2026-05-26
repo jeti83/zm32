@@ -138,5 +138,63 @@ Gesamtpreise mit 0 multipliziert wurden.
 
 ---
 
+### 5. Lokale Entwicklungsumgebung eingerichtet
+
+**Ziel:**
+Die IBA lokal (zu Hause) testbar machen, ohne den Laborserver zu berühren.
+
+**Neue Dateien:**
+- `start-docker-build-local.bat` + `config/start-docker-build-local.ps1` *(neu)*
+- `docker-compose.local-override.yml` *(neu, optional)*
+- `frontend/ssl/server.crt` + `frontend/ssl/server.key` *(lokal generiert, gitignored)*
+
+**Was sich geändert hat:**
+- Lokaler Starter per Doppelklick: baut Images, startet Container, öffnet
+  automatisch `https://localhost:4444` im Browser. Terminal bleibt offen bis
+  Enter oder Esc gedrückt wird.
+- `docker-compose-prod.yml`: Datenbank-Port von `3306` auf `3307` geändert,
+  um Konflikt mit lokalem Windows-MySQL-Dienst zu vermeiden. Der interne
+  Docker-Netzwerkverkehr zwischen `symfony` und `database` ist davon unberührt.
+  **Hinweis für den Laborserver:** DB-GUI-Tools müssen auf Port 3307 umgestellt werden.
+- `docker-compose.local-override.yml`: optionaler Override für direkten
+  DB-Zugriff per GUI-Tool (z.B. HeidiSQL, TablePlus) – mappt Port 3307 nach außen.
+- `frontend/.gitignore`: `/ssl/` ausgeschlossen (selbstsignierte Zertifikate
+  gehören nicht ins Repo und müssen lokal neu generiert werden).
+
+**Verbindungsdaten für DB-GUI-Tool (lokal):**
+
+| Feld | Wert |
+|---|---|
+| Host | `localhost` |
+| Port | `3307` |
+| Benutzer | `zm_32` |
+| Passwort | `zm_32123456` |
+| Datenbank | `zm_32` |
+
+---
+
+### 6. Build-Fixes für lokalen Docker-Build
+
+Beim ersten lokalen Start traten mehrere Build-Fehler auf, die behoben wurden:
+
+**TypeScript-Fehler (`TS5103`):**
+- `frontend/tsconfig.json`: `"ignoreDeprecations": "6.0"` war ungültig
+  (TypeScript 6 existiert noch nicht). Stattdessen die zwei veralteten Optionen
+  direkt behoben: `downlevelIteration` entfernt, `moduleResolution` von `"node"`
+  auf `"bundler"` geändert. Kein `ignoreDeprecations` mehr nötig.
+
+**GrumPHP Permission-Fehler:**
+- `Dockerfile-backend`: GrumPHP läuft als Composer-Plugin auch bei `--no-scripts`
+  und versuchte Git-Hooks in den Container zu schreiben (Permission denied).
+  Fix: `composer config allow-plugins.phpro/grumphp false` wird jetzt als `root`
+  vor dem User-Wechsel zu `www-data` ausgeführt.
+
+**Port-Konflikt 3306:**
+- Docker Compose addiert Ports aus Override-Dateien statt sie zu ersetzen –
+  daher wurde der Port direkt in `docker-compose-prod.yml` geändert (siehe Punkt 5).
+
+---
+
 *Protokoll erstellt: 26.05.2026, 20:00 Uhr*
+*Zuletzt aktualisiert: 27.05.2026*
 *Erstellt mit Unterstützung von Claude (Anthropic)*
