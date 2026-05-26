@@ -156,12 +156,14 @@ class BestellungExportHelper
         return null;
     }
 
-    private function getAmountNumber(Bestellung $bestellung)
+    private function getAmountNumber(Bestellung $bestellung): float
     {
         $amountString = $bestellung->getAmount();
-        preg_match('/\d+(\.\d+)?/', $amountString, $matches);
-        $amount = isset($matches[0]) ? (float)$matches[0] : 1.0;
-
-        return $amount;
+        preg_match('/\d+([.,]\d+)?/', $amountString, $matches);
+        if (!isset($matches[0])) {
+            return 1.0;
+        }
+        $amount = (float) str_replace(',', '.', $matches[0]);
+        return $amount > 0 ? $amount : 1.0;
     }
 }

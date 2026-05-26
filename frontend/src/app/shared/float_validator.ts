@@ -4,7 +4,19 @@ export function floatValidator(control: AbstractControl): ValidationErrors | nul
   const value = control.value;
   const floatRegex = /^[+-]?\d+(\.\d+)?(,\d+)?$/;
   if (value && !floatRegex.test(value)) {
-    return { invalidFloat: true };  // Return custom error key if validation fails
+    return { invalidFloat: true };
   }
-  return null;  // Return null if validation passes
+  return null;
+}
+
+export function positiveNumberValidator(control: AbstractControl): ValidationErrors | null {
+  const raw = control.value;
+  if (raw === null || raw === undefined || raw === '') {
+    return { required: true };
+  }
+  const num = parseFloat(raw.toString().replace(',', '.'));
+  if (isNaN(num) || num <= 0) {
+    return { notPositive: true };
+  }
+  return null;
 }

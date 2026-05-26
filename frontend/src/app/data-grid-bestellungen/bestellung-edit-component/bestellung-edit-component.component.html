@@ -152,11 +152,17 @@
         <!--  Anzahl -->
         <div>
             <mat-form-field appearance="fill">
-                <mat-label>Anzahl</mat-label>
+                <mat-label>Anzahl *</mat-label>
                 <input formControlName="amount" id="amount" matInput>
 
-                <mat-error *ngIf="bestellungForm.get('amount').invalid && bestellungForm.get('amount').touched">
-                    Anzahl muss eine Zahl sein.
+                <mat-error *ngIf="bestellungForm.get('amount').errors?.['required']">
+                    Anzahl ist erforderlich.
+                </mat-error>
+                <mat-error *ngIf="bestellungForm.get('amount').errors?.['notPositive']">
+                    Anzahl muss größer als 0 sein.
+                </mat-error>
+                <mat-error *ngIf="bestellungForm.get('amount').errors?.['invalidFloat']">
+                    Anzahl muss eine gültige Zahl sein (z.B. 2 oder 1,5).
                 </mat-error>
             </mat-form-field>
         </div>

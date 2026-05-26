@@ -19,7 +19,7 @@ import {MatToolbar} from "@angular/material/toolbar";
 import {MatIconButton} from "@angular/material/button";
 import {MatTooltip} from "@angular/material/tooltip";
 import {NgIf} from "@angular/common";
-import {floatValidator} from '../../shared/float_validator';
+import {floatValidator, positiveNumberValidator} from '../../shared/float_validator';
 import {FocusOnClickDirective} from "../../shared/focus-on-click.directive";
 import {take} from "rxjs/operators";
 import {UserService} from "../../services/user.service";
@@ -139,7 +139,7 @@ export class BestellungEditComponentComponent implements OnInit, AfterViewChecke
         this.bestellungForm = this.fb.group({
             id: [this.data?.id || 0],
             description: [this.data?.description || ''],
-            amount: [this.data?.amount || '', floatValidator],
+            amount: [this.data?.amount || '', [floatValidator, positiveNumberValidator]],
             preis: [this.data?.preis || '', floatValidator],
             gesamtpreis: [this.data?.gesamtpreis || '', floatValidator],
             packageunit: [this.data?.packageunit || ''],
